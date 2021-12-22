@@ -3,7 +3,10 @@
     <h1>People</h1>
 
     <people-form @add:person="addPerson" />
-    <people-table v-bind:people="people"/>
+    <people-table
+      v-bind:people="people"
+      @edit:person="editPerson"
+      @delete:person="deletePerson"/>
   </div>
 </template>
 
@@ -50,6 +53,18 @@ export default {
       const newPerson = { ...person, id };
 
       this.people = [...this.people, newPerson];
+    },
+
+    deletePerson(id) {
+      this.people = this.people.filter(
+        (person) => person.id !== id,
+      );
+    },
+
+    editPerson(id, updatedPerson) {
+      this.people = this.people.map(
+        (person) => (person.id === id ? updatedPerson : person),
+      );
     },
   },
 };
