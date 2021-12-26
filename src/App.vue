@@ -64,36 +64,49 @@
 
       <v-divider></v-divider>
 
-    <v-list>
-      <v-list-group
-        v-for="item in items"
-        :key="item.title"
-        v-model="item.active"
-        :prepend-icon="item.icon"
-        no-action
-      >
-        <template v-slot:activator>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </template>
+      <v-list flat>
+        <div v-for="mainMenuItem in mainMenuItems" :key="mainMenuItem.title">
+          <div v-if="mainMenuItem.subMenuItems">
+            <v-list-group
+              :prepend-icon="mainMenuItem.icon"
+              no-action
+            >
+              <template v-slot:activator>
+                <v-list-item-content>
+                  <v-list-item-title>{{ mainMenuItem.title }}</v-list-item-title>
+                </v-list-item-content>
+              </template>
 
-        <v-list-item
-          v-for="child in item.items"
-          :key="child.title"
-          :to="child.link"
-          link
-        >
-          <v-list-item-content>
-            <v-list-item-title>{{ child.title }}</v-list-item-title>
-          </v-list-item-content>
-          <v-list-item-icon>
-            <v-icon>{{ child.icon }}</v-icon>
-          </v-list-item-icon>
-        </v-list-item>
-      </v-list-group>
-    </v-list>
+              <v-list-item
+                v-for="subMenuItem in mainMenuItem.subMenuItems"
+                :key="subMenuItem.title"
+                :to="subMenuItem.link"
+                link
+              >
+                <v-list-item-content>
+                  <v-list-item-title>{{ subMenuItem.title }}</v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-icon>
+                  <v-icon>{{ subMenuItem.icon }}</v-icon>
+                </v-list-item-icon>
+              </v-list-item>
+            </v-list-group>
+          </div>
 
+          <div v-else>
+            <v-list-item
+              :to="mainMenuItem.link"
+              link
+            >
+              <v-list-item-icon>
+                <v-icon>{{ mainMenuItem.icon }}</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>{{ mainMenuItem.title }}</v-list-item-title>
+            </v-list-item>
+          </div>
+
+        </div>
+      </v-list>
     </v-navigation-drawer>
 
     <v-main>
@@ -119,36 +132,38 @@ export default {
 
   data: () => ({
     drawer: true,
-    items: [
+    mainMenuItems: [
       {
         title: 'Dashboards',
         icon: 'mdi-chart-bar',
+        link: '/dashboards',
       },
       {
         title: 'Finances',
         icon: 'mdi-cash-multiple',
+        link: '/finances',
       },
       {
         title: 'Journals',
         icon: 'mdi-notebook-multiple',
-        items: [
-          { title: 'Bike Rides', icon: 'mdi-bike', link: '/' },
-          { title: 'Books', icon: 'mdi-bookshelf', link: '/' },
-          { title: 'Health Notes', icon: 'mdi-medical-bag', link: '/' },
-          { title: 'Hikes', icon: 'mdi-walk', link: '/' },
-          { title: 'Life Notes', icon: 'mdi-note', link: '/' },
-          { title: 'Workouts', icon: 'mdi-weight-lifter', link: '/' },
+        subMenuItems: [
+          { title: 'Bike Rides', icon: 'mdi-bike', link: '/bikerides' },
+          { title: 'Books', icon: 'mdi-bookshelf', link: '/books' },
+          { title: 'Health Notes', icon: 'mdi-medical-bag', link: '/healthnotes' },
+          { title: 'Hikes', icon: 'mdi-walk', link: '/hikes' },
+          { title: 'Life Notes', icon: 'mdi-note', link: '/lifenotes' },
+          { title: 'Workouts', icon: 'mdi-weight-lifter', link: '/workouts' },
         ],
       },
       {
         title: 'People',
         icon: 'mdi-account-multiple',
-        items: [{ title: 'People', icon: 'mdi-account-multiple', link: '/people' }],
+        link: '/people',
       },
       {
         title: 'Settings',
         icon: 'mdi-cog',
-        items: [{ title: 'Tags', icon: 'mdi-tag-multiple', link: '/settings/tags' }],
+        subMenuItems: [{ title: 'Tags', icon: 'mdi-tag-multiple', link: '/settings/tags' }],
       },
     ],
     mini: false,

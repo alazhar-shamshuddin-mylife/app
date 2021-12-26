@@ -1,5 +1,5 @@
 <template>
-  <div id="people-table">
+  <div id="person-table">
     <p v-if="people.length < 1" class="empty-table">No people</p>
     <v-simple-table fixed-header v-else>
       <template v-slot:default>
@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  name: 'PeopleTable',
+  name: 'PersonTable',
 
   data() {
     return {
@@ -79,5 +79,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

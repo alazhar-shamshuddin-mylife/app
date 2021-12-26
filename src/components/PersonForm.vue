@@ -1,5 +1,5 @@
 <template>
-  <div id="people-form">
+  <div id="person-form">
     <form @submit.prevent="handleSubmit">
       <label>Person Name</label>
       <input
@@ -30,7 +30,7 @@
 
 <script>
 export default {
-  name: 'people-form',
+  name: 'PersonForm',
 
   data() {
     return {

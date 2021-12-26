@@ -2,8 +2,8 @@
   <div id="people">
     <h1>People</h1>
 
-    <people-form @add:person="addPerson" />
-    <people-table
+    <person-form @add:person="addPerson" />
+    <person-table
       v-bind:people="people"
       @edit:person="editPerson"
       @delete:person="deletePerson"/>
@@ -11,16 +11,16 @@
 </template>
 
 <script>
-import PeopleTable from '@/components/PeopleTable.vue';
-import PeopleForm from '@/components/PeopleForm.vue';
+import PersonTable from '@/components/PersonTable.vue';
+import PersonForm from '@/components/PersonForm.vue';
 import axios from 'axios';
 
 export default {
   name: 'People',
 
   components: {
-    PeopleTable,
-    PeopleForm,
+    PersonTable,
+    PersonForm,
   },
 
   data() {
