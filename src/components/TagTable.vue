@@ -1,12 +1,15 @@
 <template>
   <div id="tag-table">
-    <tag-form
-      v-bind:selectedTag="selectedTag"
-      v-bind:headers="headers"
+    <tag
       v-if="Object.keys(selectedTag).length !== 0"
+      v-bind:deselectTag="deselectTag"
+      v-bind:headers="headers"
+      v-bind:isEditMode="isEditMode"
+      v-bind:selectedTag="selectedTag"
+      v-bind:toggleEditMode="toggleEditMode"
       v-click-outside="deselectTag"
     >
-    </tag-form>
+    </tag>
 
     <v-card v-else>
       <v-card-title class="py-8">
@@ -53,19 +56,18 @@
 </template>
 
 <script>
-import TagForm from '@/components/TagForm.vue';
+import Tag from '@/components/Tag.vue';
 
 export default {
   name: 'TagTable',
 
   components: {
-    TagForm,
+    Tag,
   },
 
   data() {
     return {
-      search: '',
-      selectedTag: {},
+      isEditMode: false,
       headers: [
         {
           text: 'Name',
@@ -73,12 +75,14 @@ export default {
           sortable: true,
           value: 'name',
         },
+        { text: 'Description', value: 'description' },
         { text: 'Type', value: 'isType' },
         { text: 'Tag', value: 'isTag' },
         { text: 'Workout', value: 'isWorkout' },
         { text: 'Person', value: 'isPerson' },
-        { text: 'Description', value: 'description' },
       ],
+      search: '',
+      selectedTag: {},
     };
   },
 
@@ -90,6 +94,10 @@ export default {
     handleClick(row) {
       this.selectedTag = row;
     },
+
+    toggleEditMode() {
+      this.isEditMode = !this.isEditMode;
+    },
   },
 
   props: {
@@ -97,9 +105,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.selected {
-    background-color: red
-}
-</style>
